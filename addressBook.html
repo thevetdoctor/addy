@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="address, book, contacts, email, photo">
+	<title>Address Book</title>
+	<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
+	<script type="text/javascript" src="angular.min.js"></script>
+	<style>
+		body {
+			background-color: #335;
+			color: #fff;
+			width: 70%;
+			margin: 3% 15%;
+			text-align: center;
+			font-family: monospace;
+			/*font-family: monospace Serif;*/
+			font-size: 2em;
+			padding: 0px;
+		}
+		.btn {
+			right: 10px;
+			/*position: relative;*/
+			margin: 4px 8px;
+		}
+		span {
+			/*text-align: right;*/
+			align-items: right;
+			/*border: 1px solid;*/
+		}
+		img {
+			width: 80px;
+			border-radius: 50%;
+			margin-right: 20px;
+		}
+		input {
+			border-radius: 10px;
+			color: #000;
+			padding-left: 5px;
+		}
+		.saved {
+			background-color: green;
+		}
+		div {
+			/*margin-top: 10px;*/
+			/*margin-bottom: 10px;*/
+		}
+		.btn {
+			font-size: 0.8em;
+			border-radius: 10px;
+		}
+		.delete {
+			background-color: red;
+		}
+		.edit {
+			background-color: blue;
+		}
+</style>
+</head>
+<body>
+	<!-- .container-fluid>.row>.contact*4 -->
+	<div class="container-fluid">
+		<h3>Welcome to my address book!</h3>No of Entries:
+		<span class="number"></span>
+		<div class="row">
+		</div>
+	</div>
+
+<script>
+
+
+	let arr1 = [
+	{name: 'obafemi', email: 'thevetdoctor@gmail.com', phone: '08069100463'},
+	{name: 'oyetoke', email: 'tokeoderanti@gmail.com', phone: '08050507278'},
+	{name: 'demilade', email: 'demi@gmail.com', phone: '07043774551'},
+	{name: 'damilola', email: 'dami@gmail.com', phone: '08077301227'},
+	{name: 'grandpa', email: 'demolab@gmail.com', phone: '08033340832'},{name: 'obafemi', email: 'thevetdoctor@gmail.com', phone: '08069100463'},
+	{name: 'oyetoke', email: 'tokeoderanti@gmail.com', phone: '08050507278'},
+	{name: 'demilade', email: 'demi@gmail.com', phone: '07043774551'},
+	{name: 'damilola', email: 'dami@gmail.com', phone: '08077301227'},
+	{name: 'grandpa', email: 'demolab@gmail.com', phone: '08033340832'},{name: 'obafemi', email: 'thevetdoctor@gmail.com', phone: '08069100463'},
+	{name: 'oyetoke', email: 'tokeoderanti@gmail.com', phone: '08050507278'},
+	{name: 'demilade', email: 'demi@gmail.com', phone: '07043774551'},
+	{name: 'damilola', email: 'dami@gmail.com', phone: '08077301227'},
+	{name: 'grandpa', email: 'demolab@gmail.com', phone: '08033340832'},{name: 'obafemi', email: 'thevetdoctor@gmail.com', phone: '08069100463'},
+	{name: 'oyetoke', email: 'tokeoderanti@gmail.com', phone: '08050507278'},
+	{name: 'demilade', email: 'demi@gmail.com', phone: '07043774551'},
+	{name: 'damilola', email: 'dami@gmail.com', phone: '08077301227'},
+	{name: 'grandpa', email: 'demolab@gmail.com', phone: '08033340832'}
+	];
+
+
+		let row = document.querySelector('.row');
+	firstRun();
+
+	let number = document.querySelector('.number');
+	number.textContent = arr1.length;
+
+	function firstRun(){
+		row.innerHTML = '';
+	console.log(arr1);
+
+
+		let count = 1;
+	// for (var i = arr1.length-1; i >= 0 ; i--){
+	for (var i = 0; i < arr1.length; i++){
+
+
+		let contact = document.createElement('div');
+		contact.style = 'border:1px solid; margin-bottom:20px; border-radius:10px;';
+
+		let tag = document.createElement('h4');
+		tag.innerHTML = count + '<hr>';
+
+		let name = document.createElement('span');
+		name.innerHTML = 'name: ' + arr1[i].name + '<hr>';
+
+		let img = document.createElement('img');
+		img.src = 'img/bgg' + i + '.jpg';
+		img.src = 'img/bgg0' + '.jpg';
+
+		let email = document.createElement('span');
+		email.innerHTML = 'email: ' + arr1[i].email + '<hr>';
+
+		let phone = document.createElement('span');
+		phone.innerHTML = 'phone: ' + arr1[i].phone + '<hr>';
+
+		let btns = document.createElement('span');
+		btns.innerHTML = '<button class="btn btn-sm delete btn-danger" value="' + arr1[i] + '">Delete</button><button class="btn btn-sm edit btn-primary" value="' + arr1[i] + '">Edit</button>';
+
+		contact.appendChild(tag);
+		contact.appendChild(img);
+		contact.appendChild(name);
+		contact.appendChild(email);
+		contact.appendChild(phone);
+		contact.appendChild(btns);
+
+		row.appendChild(contact);
+
+		count++;
+	}
+}
+
+// function getTarget(e){
+// 	if(!e){
+// 		e = window.event;
+// 	}
+// 	return e.target || e.srcElement;
+// }
+
+function itemDone(e){
+	let target, parent, gParent;
+	// target = getTarget(e);
+	target = e.target;
+	parent = target.parentNode;
+	gParent = parent.parentNode;
+	gGParent = gParent.parentNode;
+	gGParent.removeChild(gParent);
+}
+
+let deleteBtn = document.querySelectorAll('.btn-danger');
+let editBtn = document.querySelectorAll('.btn-primary');
+// const row = document.querySelector('.row');
+
+
+deleteBtn.forEach(function(del){
+
+del.addEventListener('click', function(e){
+// row.addEventListener('click', function(e){
+	var nameSpanContent = del.parentNode.parentNode.firstChild.nextSibling.nextSibling.textContent;
+	var nameSplit = nameSpanContent.split(' ');
+	var justName = nameSplit[1].toUpperCase();
+
+	if(arr1.length < 2){
+		alert('Address book cannot be emptied!');
+		return false;
+	} else {
+	let ans = confirm('Delete ' + justName + '?');
+	if(ans){
+	// arr1.splice(0, 1);
+	itemDone(e);
+	// console.log(del.parentNode.parentNode.firstChild.textContent);
+	// console.log(del.parentNode.parentNode.firstChild.nextSibling.nextSibling.textContent);
+	// console.log(del.parentNode.parentNode);
+	arr1.length--;
+	// console.log(arr1.length);
+	// number.textContent = '';
+	number.textContent = arr1.length;
+	var list = document.querySelectorAll('h4');
+	for(var i = 0; i < list.length; i++){
+		list[i].textContent = i + 1;
+	// console.log(list);
+	// console.log(row.firstChild.firstChild);
+	// row.firstChild.firstChild.innerHTML = '';
+	// firstRun();
+	}
+	}
+}
+
+}, false);
+})
+
+editBtn.forEach(function(edit){
+
+edit.addEventListener('click', function(e){
+	edit.textContent = 'Save';
+	edit.classList.add('saved');
+	// console.log(arr1[0]);
+	// arr1.splice(0, 1);
+	console.log(arr1.length);
+	console.log(row);
+	// console.log(name.innerHTML);
+
+}, false);
+})
+	// angular.module("myApp", []).controller("myCtrl", function($scope){
+
+	// 	$scope.web = 'Welcome to my address book!';
+
+	// let arr1 = ['obafemi', 'thevetdoctor', '08069100463'];
+	// let contact = document.querySelector('.contact');
+	// let name = document.querySelector('.name');
+	// let email = document.querySelector('.email');
+	// let phone = document.querySelector('.phone');
+
+
+// 	let contact = document.querySelector('.contact');
+// 	let name = document.querySelector('.name');
+// 	let email = document.querySelector('.email');
+// 	let phone = document.querySelector('.phone');
+
+// 	// name.textContent = arr1[0];
+// 	// email.textContent = arr1[1];
+// 	// phone.textContent = arr1[2];
+
+// 	for (var i = 0; i < arr1.length; i++){
+
+// 	name.textContent = arr1[i].name;
+// 	email.textContent = arr1[i].email;
+// 	phone.textContent = arr1[i].phone;
+
+// }
+
+		// <!-- 	<div class="contact" ng-repeat="x in arr1">
+		// 			name: <span class="name"></span><hr>
+		// 			email: <span class="email"></span><hr>
+		// 			phoneNumber: <span class="phone"></span>
+		// 	</div> -->
+		// 	<!-- <div class="contact"  ng-hide="showHide">
+		// 			name: <span class="name"><input type="" name="" ng-model="showHide"></span>
+		// 			<hr>
+		// 			email: <span class="email"><input type="" name=""></span>
+		// 			<hr>
+		// 			<button class="btn btn-xs btn-primary" ng-hide="showHide">Save</button>
+		// 			<input type="checkbox" name="Set" ng-model="showHide">
+		// 			phoneNumber: <span class="phone"><input type="text" name="" ng-hide="showHide" value="2222"></span>
+		// 	</div> -->
+	// });
+</script>
+</body>
+</html>
